@@ -1,4 +1,4 @@
-# Создаем игровую доску при помощи словаря
+# Создаем игровую доску при помощи dictionary
 
 theBoard = {'1': ' ', '2': ' ', '3': ' ',
             '4': ' ', '5': ' ', '6': ' ',
@@ -13,7 +13,7 @@ for key in theBoard:
 для этого создаем функцию printBoard'''
 
 
-def printBoard(board):
+def print_board(board):
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
     print('-+-+-')
     print(board['4'] + '|' + board['5'] + '|' + board['6'])
@@ -29,7 +29,7 @@ def game():
     count = 0
 
     for i in range(10):
-        printBoard(theBoard)
+        print_board(theBoard)
         print("Твой ход, " + turn + ". Куда походить?")
 
         move = input()
@@ -44,42 +44,42 @@ def game():
         # После 5го хода проверяем, не выиграл ли игрок Х или О
         if count >= 5:
             if theBoard['1'] == theBoard['2'] == theBoard['3'] != ' ':  # проверяем верхний ряд
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['4'] == theBoard['5'] == theBoard['6']:  # проверяем средний ряд
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['7'] == theBoard['8'] == theBoard['9']:  # проверяем нижний ряд
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['1'] == theBoard['4'] == theBoard['6']:  # проверяем первый столбец
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['2'] == theBoard['5'] == theBoard['7']:  # проверяем средний столбец
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['3'] == theBoard['6'] == theBoard['9']:  # проверяем правый ряд
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили ****")
                 break
             elif theBoard['1'] == theBoard['5'] == theBoard['9']:  # проверяем диагональ 1-5-9
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
             elif theBoard['3'] == theBoard['5'] == theBoard['7']:  # Проверяем диагональ 3-5-9
-                printBoard(theBoard)
+                print_board(theBoard)
                 print("\nИгра окончена!")
                 print(" **** " + turn + " победили **** ")
                 break
