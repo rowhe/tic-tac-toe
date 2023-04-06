@@ -1,124 +1,99 @@
-import random
+# Создаем игровую доску при помощи словаря
+
+theBoard = {'1': ' ', '2': ' ', '3': ' ',
+            '4': ' ', '5': ' ', '6': ' ',
+            '7': ' ', '8': ' ', '9': ' '}
+
+board_keys = []
+
+for key in theBoard:
+    board_keys.append(key)
+
+''' После каждого хода мы будем перерисовывать игровую доску,
+для этого создаем функцию printBoard'''
 
 
-class TicTacToe:
+def printBoard(board):
+    print(board['1'] + '|' + board['2'] + '|' + board['3'])
+    print('-+-+-')
+    print(board['4'] + '|' + board['5'] + '|' + board['6'])
+    print('-+-+-')
+    print(board['7'] + '|' + board['8'] + '|' + board['9'])
 
-    def __init__(self):
-        self.board = []
 
-    def create_board(self):
-        for i in range(3):
-            row = []
-            for j in range(3):
-                row.append('-')
-            self.board.append(row)
+# Основная функция игры
 
-    def get_random_first_player(self):
-        return random.randint(0, 1)
 
-    def fix_spot(self, row, col, player):
-        self.board[row][col] = player
+def game():
+    turn = 'X'
+    count = 0
 
-    def is_player_win(self, player):
-        win = None
+    for i in range(10):
+        printBoard(theBoard)
+        print("Твой ход, " + turn + ". Куда походить?")
 
-        n = len(self.board)
+        move = input()
 
-        # checking rows
-        for i in range(n):
-            win = True
-            for j in range(n):
-                if self.board[i][j] != player:
-                    win = False
-                    break
-            if win:
-                return win
+        if theBoard[move] == ' ':
+            theBoard[move] = turn
+            count += 1
+        else:
+            print("Это поле уже занято.\nКуда походить?")
+            continue
 
-        # checking columns
-        for i in range(n):
-            win = True
-            for j in range(n):
-                if self.board[j][i] != player:
-                    win = False
-                    break
-            if win:
-                return win
-
-        # checking diagonals
-        win = True
-        for i in range(n):
-            if self.board[i][i] != player:
-                win = False
+        # После 5го хода проверяем, не выиграл ли игрок Х или О
+        if count >= 5:
+            if theBoard['1'] == theBoard['2'] == theBoard['3'] != ' ':  # проверяем верхний ряд
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
                 break
-        if win:
-            return win
-
-        win = True
-        for i in range(n):
-            if self.board[i][n - 1 - i] != player:
-                win = False
+            elif theBoard['4'] == theBoard['5'] == theBoard['6']:  # проверяем средний ряд
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
                 break
-        if win:
-            return win
-        return False
-
-        for row in self.board:
-            for item in row:
-                if item == '-':
-                    return False
-        return True
-
-    def is_board_filled(self):
-        for row in self.board:
-            for item in row:
-                if item == '-':
-                    return False
-        return True
-
-    def swap_player_turn(self, player):
-        return 'X' if player == 'O' else 'O'
-
-    def show_board(self):
-        for row in self.board:
-            for item in row:
-                print(item, end=" ")
-            print()
-
-    def start(self):
-        self.create_board()
-
-        player = 'X' if self.get_random_first_player() == 1 else 'O'
-        while True:
-            print(f"Player {player} turn")
-
-            self.show_board()
-
-            # taking user input
-            row, col = list(
-                map(int, input("Enter row and column numbers to fix spot: ").split()))
-            print()
-
-            # fixing the spot
-            self.fix_spot(row - 1, col - 1, player)
-
-            # checking whether current player is won or not
-            if self.is_player_win(player):
-                print(f"Player {player} wins the game!")
+            elif theBoard['7'] == theBoard['8'] == theBoard['9']:  # проверяем нижний ряд
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
+                break
+            elif theBoard['1'] == theBoard['4'] == theBoard['6']:  # проверяем первый столбец
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
+                break
+            elif theBoard['2'] == theBoard['5'] == theBoard['7']:  # проверяем средний столбец
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
+                break
+            elif theBoard['3'] == theBoard['6'] == theBoard['9']:  # проверяем правый ряд
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили ****")
+                break
+            elif theBoard['1'] == theBoard['5'] == theBoard['9']:  # проверяем диагональ 1-5-9
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
+                break
+            elif theBoard['3'] == theBoard['5'] == theBoard['7']:  # Проверяем диагональ 3-5-9
+                printBoard(theBoard)
+                print("\nИгра окончена!")
+                print(" **** " + turn + " победили **** ")
                 break
 
-            # checking whether the game is draw or not
-            if self.is_board_filled():
-                print("Match Draw!")
-                break
+        # Если никто не победил, а ходы кончились, объявляем "Ничью"
+        if count == 9:
+            print("\nИгра окончена ВНИЧЬЮ")
 
-            # swapping the turn
-            player = self.swap_player_turn(player)
+        # Тут мы будем менять X и O после каждого хода
 
-        # showing the final view of board
-        print()
-        self.show_board()
+        if turn == 'X':
+            turn = 'O'
+        else:
+            turn = 'X'
 
 
-# starting the game
-tic_tac_toe = TicTacToe()
-tic_tac_toe.start()
+game()
